@@ -18,10 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-// use numbers array to represent the board
-const board = ref < number[][] > ()
-const score = ref < number > (0)
 
 /* 
 TODO:
