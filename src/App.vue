@@ -27,7 +27,7 @@
                             :class="{ 'bg-gray-400': isActive(work.path) }">
                             <h2 class="text-xl font-bold text-gray-700">{{ work.name }}</h2>
                             <div :class="work.status === '已上线' ? 'bg-green-500' : 'bg-red-500'"
-                                class="text-white py-1 px-3 w-fit text-sm">
+                                class="text-white py-1 px-2 w-fit text-sm box">
                                 {{ work.status }}
                             </div>
                         </div>
