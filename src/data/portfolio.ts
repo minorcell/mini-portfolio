@@ -15,6 +15,11 @@ export const works: Work[] = [
     {
         name: "2048小游戏",
         status: "开发中",
-        path: "/2048",
+        path: "/2048-game",
+    },
+    {
+        name: "多功能画板",
+        status: "开发中",
+        path: "/paint-board",
     }
 ]
