@@ -14,7 +14,7 @@ type Work = {
 export const works: Work[] = [
     {
         name: "2048小游戏",
-        status: "开发中",
+        status: "已上线",
         path: "/2048-game",
     },
     {
