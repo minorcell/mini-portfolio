@@ -52,22 +52,7 @@
             :class="{ 'scale-105 translate-x-10': isActive(work.path) }"
             @click="navigateTo(work.path, index)"
           >
-            <div
-              class="duration-300 w-full p-2 bg-gray-400 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 box"
-              :class="{ 'bg-gray-400 dark:bg-gray-600': isActive(work.path) }"
-            >
-              <h2 class="text-xl font-bold text-gray-700 dark:text-gray-200">
-                {{ work.name }}
-              </h2>
-              <div
-                :class="
-                  work.status === '已上线' ? 'bg-green-500' : 'bg-red-500'
-                "
-                class="text-white py-1 px-2 w-fit text-sm box"
-              >
-                {{ work.status }}
-              </div>
-            </div>
+            <WorkItem :work="work" />
           </li>
         </ul>
       </aside>
@@ -102,6 +87,7 @@ import { onMounted, ref, computed } from "vue";
 import { works } from "./data/portfolio";
 import { useRouter, useRoute } from "vue-router";
 import { useThemeStore } from "./stores/theme";
+import WorkItem from "./components/ui/WorkItem.vue";
 
 import ThemeToggle from "./components/ui/ThemeToggle.vue";
 
