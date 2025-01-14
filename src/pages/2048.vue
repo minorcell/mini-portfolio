@@ -26,22 +26,24 @@
     </div>
 
     <!-- Controls -->
-    <div class="w-full h-auto flex items-center justify-center gap-4 mt-4">
+    <div class="w-96 h-auto flex items-center justify-between gap-4 mt-4 pb-4">
       <span class="text-2xl font-bold text-gray-700 dark:text-gray-100"
         >分数：{{ maxScore || "0" }}
       </span>
-      <button
-        class="duration-300 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
-        @click="startGame"
-      >
-        开始游戏
-      </button>
-      <button
-        class="duration-300 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        @click="restartGame"
-      >
-        重新开始
-      </button>
+      <div class="flex items-center justify-center gap-4 text-white font-bold">
+        <button
+          class="duration-300 bg-yellow-500 hover:bg-yellow-700 py-2 px-4 rounded"
+          @click="startGame"
+        >
+          开始游戏
+        </button>
+        <button
+          class="duration-300 bg-red-500 hover:bg-red-700 py-2 px-4 rounded"
+          @click="restartGame"
+        >
+          重新开始
+        </button>
+      </div>
     </div>
     <!-- Game Status -->
 
