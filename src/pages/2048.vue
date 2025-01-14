@@ -12,13 +12,14 @@
     </div>
 
     <div
-      class="w-96 h-96 grid grid-rows-4 grid-cols-4 gap-2 dark:bg-yellow-500 rounded-lg p-2 bg-green-500"
+      class="w-96 h-96 grid grid-rows-4 grid-cols-4 gap-2 rounded-lg p-2 bg-green-500"
     >
       <!-- Render board cells -->
       <div
         v-for="(cell, index) in board.flat()"
         :key="index"
-        class="flex items-center justify-center bg-gray-700 dark:bg-gray-100 rounded-lg font-bold text-3xl text-gray-100 dark:text-gray-700"
+        :style="{ backgroundColor: getColor(cell) }"
+        class="flex items-center justify-center bg-gray-700 dark:bg-gray-100 rounded-lg font-bold text-3xl text-gray-700"
       >
         {{ cell || "" }}
       </div>
@@ -27,64 +28,64 @@
     <!-- Controls -->
     <div class="w-full h-auto flex items-center justify-center gap-4 mt-4">
       <span class="text-2xl font-bold text-gray-700 dark:text-gray-100"
-        >分数：{{ maxScore || "0" }}</span
-      >
+        >分数：{{ maxScore || "0" }}
+      </span>
       <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        class="duration-300 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
         @click="startGame"
       >
         开始游戏
       </button>
       <button
-        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        class="duration-300 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
         @click="restartGame"
       >
         重新开始
       </button>
     </div>
-
     <!-- Game Status -->
-    <div class="w-full h-auto flex items-center justify-center mt-4">
-      <span
-        v-if="gameStatus === 'win'"
-        class="text-2xl font-bold text-green-500"
-      >
-        恭喜你，你赢了！
-      </span>
-      <span
-        v-else-if="gameStatus === 'lose'"
-        class="text-2xl font-bold text-red-500"
-      >
-        很遗憾，你输了！
-      </span>
-    </div>
+
+    <Dialog
+      :visible="showDialog"
+      title="2048游戏提示"
+      cancel-content="关闭"
+      confirm-content="重新开始"
+      @confirm="handleConfirm"
+      @update:visible="showDialog = $event"
+    >
+      <template #content>
+        <p class="text-gray-700 dark:text-gray-100">
+          {{
+            gameStatus === "win"
+              ? "恭喜你，成功获得2048！"
+              : "游戏结束，请重新开始！"
+          }}
+        </p>
+      </template>
+    </Dialog>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, onUnmounted } from "vue";
+import Dialog from "../components/ui/Dialog.vue";
+import { useColor } from "../hooks/useColor";
+import { sleep } from "../utils/tools";
 
-const SIZE = 4;
-
-// Vue Reactive State
 const board = reactive(createEmptyGrid());
 const maxScore = ref(0);
 const gameStatus = ref<"playing" | "win" | "lose">("playing");
+const showDialog = ref<boolean>(false);
 
-/**
- * generate a 2d array of size 4x4 filled with 0
- * @retuen a 2d array of size 4x4 filled with 0
- */
+const SIZE = 4;
+const { getColor } = useColor();
+
 function createEmptyGrid() {
   return Array(SIZE)
     .fill(null)
     .map(() => Array(SIZE).fill(0));
 }
 
-/**
- * initalize the game board
- * @param grid: number[][]
- */
 function addRandomTile(grid: number[][]) {
   const emptyTiles = [];
   for (let i = 0; i < SIZE; i++) {
@@ -99,12 +100,6 @@ function addRandomTile(grid: number[][]) {
   }
 }
 
-/**
- * combine a row of the board :
- * if two adjacent tiles have the same value, they merge into one tile with the value doubled
- * @param row number[] : a row of the board
- * @return number[] : a row of the board after combining
- */
 function combineRow(row: number[]) {
   const newRow = row.filter((value) => value !== 0);
   for (let i = 0; i < newRow.length - 1; i++) {
@@ -193,25 +188,19 @@ function handleKeyDown(e: KeyboardEvent) {
 
   if (board.flat().includes(2048)) {
     gameStatus.value = "win";
+    showDialog.value = true;
   } else if (board.flat().every((cell) => cell !== 0)) {
     gameStatus.value = "lose";
+    showDialog.value = true;
   }
 }
 
-/* // color for different tiles
-const colors = {
-  2: "#eee4da",
-  4: "#ede0c8",
-  8: "#f2b179",
-  16: "#f59563",
-  32: "#f67c5f",
-  64: "#f65e3b",
-  128: "#edcf72",
-  256: "#edcc61",
-  512: "#edc850",
-  1024: "#edc53f",
-  2048: "#edc22e",
-}; */
+function handleConfirm() {
+  showDialog.value = false;
+  sleep(500).then(() => {
+    restartGame();
+  });
+}
 
 onMounted(() => {
   startGame();
