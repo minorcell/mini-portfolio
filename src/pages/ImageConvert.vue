@@ -25,7 +25,7 @@
         @click="uploadImage"
         src="/src/assets/imageConvert/plus.svg"
         alt="default"
-        class="max-w-96 h-auto border rounded"
+        class="max-w-96 h-auto rounded"
         v-else
       />
     </div>
@@ -70,10 +70,10 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
-const previewUrl = ref<string | null>(null); // 预览图片的URL
-const convertedUrl = ref<string | null>(null); // 转换后的图片的URL
-const selectedFormat = ref<string>("image/png"); // 目标格式
-const canvas = document.createElement("canvas"); // 用于转换图片的canvas
+const previewUrl = ref<string | null>(null);
+const convertedUrl = ref<string | null>(null);
+const selectedFormat = ref<string>("image/png"); 
+const canvas = document.createElement("canvas");
 
 const onFileChange = (event: Event) => {
   const file = (event.target as HTMLInputElement).files?.[0];
