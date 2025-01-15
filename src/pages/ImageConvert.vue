@@ -12,29 +12,34 @@
     </div>
 
     <!-- imags perview -->
-    <div class="mb-4">
-      <!-- uploda image -->
-      <input type="file" accept="image/*" @change="onFileChange" class="mb-4" />
-      <!-- TODO:
-        1. darg and drop
-        2. multiple files
-      -->
+    <div
+      class="mb-4 w-96 h-96 border-yellow-500 p-2 border-2 rounded flex justify-center items-center"
+    >
       <img
         v-if="previewUrl"
         :src="previewUrl"
         alt="预览"
+        class="w-full h-auto border rounded"
+      />
+      <img
+        @click="uploadImage"
+        src="/src/assets/imageConvert/plus.svg"
+        alt="default"
         class="max-w-96 h-auto border rounded"
+        v-else
       />
     </div>
 
     <div class="w-1/2 px-4 py-2 flex items-center justify-between">
       <!-- Controls -->
       <div class="flex items-center justify-center">
-        <label for="format" class="block mb-2">选择目标格式：</label>
+        <label for="format" class="text-gray-700 dark:text-gray-100"
+          >选择目标格式：</label
+        >
         <select
           id="format"
           v-model="selectedFormat"
-          class="mb-4 p-2 border rounded"
+          class="px-2 py-1 border rounded bg-yellow-500"
         >
           <option value="image/png">PNG</option>
           <option value="image/jpeg">JPEG</option>
@@ -47,11 +52,12 @@
           :disabled="!previewUrl"
           class="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
         >
-          转换
+          {{ convertedUrl ? "转换完成" : "转换" }}
         </button>
 
         <button
           @click="downloadImage"
+          :disabled="!convertedUrl"
           class="ml-4 px-4 py-2 bg-green-500 text-white rounded"
         >
           下载
@@ -64,10 +70,10 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
-const previewUrl = ref<string | null>(null);
-const convertedUrl = ref<string | null>(null);
-const selectedFormat = ref<string>("image/png");
-const canvas = document.createElement("canvas");
+const previewUrl = ref<string | null>(null); // 预览图片的URL
+const convertedUrl = ref<string | null>(null); // 转换后的图片的URL
+const selectedFormat = ref<string>("image/png"); // 目标格式
+const canvas = document.createElement("canvas"); // 用于转换图片的canvas
 
 const onFileChange = (event: Event) => {
   const file = (event.target as HTMLInputElement).files?.[0];
@@ -109,6 +115,14 @@ const downloadImage = () => {
   a.href = convertedUrl.value;
   a.download = `converted.${selectedFormat.value.split("/")[1]}`;
   a.click();
+};
+
+const uploadImage = () => {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "image/*";
+  input.click();
+  input.addEventListener("change", onFileChange);
 };
 </script>
 
