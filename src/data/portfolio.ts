@@ -1,15 +1,16 @@
 /* 
 this file is used to store the data of the works those show in the main page.
 */
+import { sortByStatus } from "../utils/tools";
 
-type Work = {
+export type Work = {
     name: string;
     status: '开发中' | '已上线' | '已废弃';
     path: string;
 };
 
 
-export const works: Work[] = [
+export const works: Work[] = sortByStatus([
     {
         name: "2048小游戏",
         status: "已上线",
@@ -30,4 +31,4 @@ export const works: Work[] = [
         status: "开发中",
         path: "/i18n",
     }
-]
+])
