@@ -120,7 +120,3 @@ onMounted(() => {
 // Dark mode toggle
 const isDark = computed(() => themeStore.isDark);
 </script>
-
-<style scoped>
-/* Scoped styles can be added here */
-</style>

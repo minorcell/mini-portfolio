@@ -1,15 +1,10 @@
 <template>
-  <div class="w-full h-full flex flex-col justify-between items-center p-4">
+  <div class="work">
     <!-- Info -->
-    <div
-      class="w-full flex flex-col items-start justify-center text-gray-700 dark:text-gray-100"
-    >
-      <h1 class="text-4xl font-bold mb-2">2048小游戏</h1>
-      <p class="text-sm">
-        操作指南：
-        使用键盘上的方向键（上、下、左、右）来移动方块，使相同的数字方块合并成更大的数字方块。目标是得到2048这个数字方块。
-      </p>
-    </div>
+    <WorkInfo
+      work-name="2048小游戏"
+      work-description="使用键盘上的方向键（上、下、左、右）来移动方块，使相同的数字方块合并成更大的数字方块。目标是得到2048这个数字方块。"
+    />
 
     <div
       class="w-96 h-96 grid grid-rows-4 grid-cols-4 gap-2 rounded-lg p-2 bg-green-500"
@@ -31,18 +26,8 @@
         >分数：{{ maxScore || "0" }}
       </span>
       <div class="flex items-center justify-center gap-4 text-white font-bold">
-        <button
-          class="duration-300 bg-yellow-500 hover:bg-yellow-700 py-2 px-4 rounded"
-          @click="startGame"
-        >
-          开始游戏
-        </button>
-        <button
-          class="duration-300 bg-red-500 hover:bg-red-700 py-2 px-4 rounded"
-          @click="restartGame"
-        >
-          重新开始
-        </button>
+        <Button type="primary" @click="startGame"> 开始游戏 </Button>
+        <Button type="success" @click="restartGame"> 重新开始 </Button>
       </div>
     </div>
     <!-- Game Status -->
@@ -71,6 +56,8 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, onUnmounted } from "vue";
 import Dialog from "../components/ui/Dialog.vue";
+import WorkInfo from "../components/ui/WorkInfo.vue";
+import Button from "../components/ui/Button.vue";
 import { useColor } from "../hooks/useColor";
 import { sleep } from "../utils/tools";
 

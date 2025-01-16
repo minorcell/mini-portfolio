@@ -6,3 +6,7 @@
 .box {
   @apply rounded-xl shadow-lg;
 }
+
+.work {
+  @apply w-full h-full flex flex-col justify-between items-center p-4;
+}

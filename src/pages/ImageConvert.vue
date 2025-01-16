@@ -1,15 +1,10 @@
 <template>
-  <div class="w-full h-full flex flex-col justify-between items-center p-4">
+  <div class="work">
     <!-- Info -->
-    <div
-      class="w-full flex flex-col items-start justify-center text-gray-700 dark:text-gray-100"
-    >
-      <h1 class="text-4xl font-bold mb-2">图片格式转换工具</h1>
-      <p class="text-sm">
-        操作指南：
-        上传图片，选择目标格式，点击转换按钮，然后点击下载按钮下载转换后的图片。
-      </p>
-    </div>
+    <WorkInfo
+      work-name="图片格式转换工具"
+      work-description="上传图片，选择目标格式，点击转换按钮，然后点击下载按钮下载转换后的图片。"
+    />
 
     <!-- imags perview -->
     <div
@@ -47,21 +42,15 @@
         </select>
       </div>
       <div class="flex items-center justify-center gap-4">
-        <button
-          @click="convertImage"
-          :disabled="!previewUrl"
-          class="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
-        >
-          {{ convertedUrl ? "转换完成" : "转换" }}
-        </button>
-
-        <button
+        <Button type="primary" @click="convertImage" :disabled="!previewUrl">{{
+          convertedUrl ? "转换完成" : "转换"
+        }}</Button>
+        <Button
+          type="success"
           @click="downloadImage"
           :disabled="!convertedUrl"
-          class="ml-4 px-4 py-2 bg-green-500 text-white rounded"
+          >下载</Button
         >
-          下载
-        </button>
       </div>
     </div>
   </div>
@@ -69,10 +58,12 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import WorkInfo from "../components/ui/WorkInfo.vue";
+import Button from "../components/ui/Button.vue";
 
 const previewUrl = ref<string | null>(null);
 const convertedUrl = ref<string | null>(null);
-const selectedFormat = ref<string>("image/png"); 
+const selectedFormat = ref<string>("image/png");
 const canvas = document.createElement("canvas");
 
 const onFileChange = (event: Event) => {
