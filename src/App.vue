@@ -89,6 +89,7 @@ import { onMounted, ref, computed } from "vue";
 import { works } from "./data/portfolio";
 import { useRouter, useRoute } from "vue-router";
 import { useThemeStore } from "./stores/theme";
+import { useTitle } from "./hooks";
 import WorkItem from "./components/WorkItem.vue";
 
 import ThemeToggle from "./components/ThemeToggle.vue";
@@ -103,6 +104,7 @@ const themeStore = useThemeStore();
 const navigateTo = (path: string, index: number) => {
   router.push(path);
   activeWork.value = index;
+  useTitle(works[index].name, false);
 };
 
 // Check if a work is active
@@ -115,6 +117,7 @@ onMounted(() => {
     if (defaultWork) {
       router.replace(defaultWork.path);
       activeWork.value = 0;
+      useTitle(defaultWork.name, false);
     }
   }
 });

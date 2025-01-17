@@ -6,17 +6,9 @@ import { ref, watch } from "vue";
  * @param isCoverOrigin - isCoverOrigin, default true
  */
 export function useTitle(title: string, isCoverOrigin: boolean = true) {
-    // save original title
-    const originalTitle = ref(document.title);
-
-    // set new title  
+    // set new title
     const setTitle = (newTitle: string) => {
         document.title = newTitle;
-    };
-
-    // reset title
-    const resetTitle = () => {
-        document.title = originalTitle.value;
     };
 
     // watch title
@@ -26,13 +18,9 @@ export function useTitle(title: string, isCoverOrigin: boolean = true) {
             if (isCoverOrigin) {
                 setTitle(newTitle);
             } else {
-                setTitle(`${originalTitle.value} - ${newTitle}`);
+                setTitle(`Mini-PortFolio | ${newTitle}`);
             }
         },
         { immediate: true }
     );
-
-    return {
-        resetTitle,
-    };
 }
