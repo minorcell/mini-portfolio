@@ -15,7 +15,7 @@ export function useColor() {
     };
 
     const getColor = (value: number): string => {
-        return cellColors[value] || cellColors[0];
+        return cellColors.hasOwnProperty(value) ? cellColors[value] : cellColors[0];
     };
 
     return {

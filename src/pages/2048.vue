@@ -70,7 +70,7 @@ import { ref, reactive, onMounted, onUnmounted } from "vue";
 import Dialog from "../components/ui/Dialog.vue";
 import WorkInfo from "../components/ui/WorkInfo.vue";
 import Button from "../components/ui/Button.vue";
-import { useColor } from "../hooks/useColor";
+import { useColor } from "../hooks";
 import { sleep } from "../utils/tools";
 
 const board = reactive(createEmptyGrid());
