@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted } from "vue";
+import { ref, reactive, onActivated, onDeactivated } from "vue";
 import { useColor } from "../hooks/index";
 import { sleep } from "../utils/tools";
 
@@ -203,12 +203,11 @@ function handleConfirm() {
   });
 }
 
-onMounted(() => {
-  startGame();
+onActivated(() => {
   window.addEventListener("keydown", handleKeyDown);
 });
 
-onUnmounted(() => {
+onDeactivated(() => {
   window.removeEventListener("keydown", handleKeyDown);
 });
 </script>
