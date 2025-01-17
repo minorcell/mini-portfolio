@@ -23,11 +23,23 @@
     <!-- Controls -->
     <div class="w-96 h-auto flex items-center justify-between gap-4 mt-4 pb-4">
       <span class="text-2xl font-bold text-gray-700 dark:text-gray-100"
-        >分数：{{ maxScore || "0" }}
+        >分数：{{ maxScore || "00" }}
       </span>
       <div class="flex items-center justify-center gap-4 text-white font-bold">
-        <Button type="primary" @click="startGame"> 开始游戏 </Button>
-        <Button type="success" @click="restartGame"> 重新开始 </Button>
+        <Button
+          type="primary"
+          @click="startGame"
+          :disabled="gameStatus !== 'playing'"
+        >
+          开始游戏
+        </Button>
+        <Button
+          type="warning"
+          @click="restartGame"
+          :disabled="gameStatus !== 'playing'"
+        >
+          重新开始
+        </Button>
       </div>
     </div>
     <!-- Game Status -->
