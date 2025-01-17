@@ -1,10 +1,10 @@
 <template>
   <div
-    class="w-screen h-screen flex flex-col justify-between bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300 select-none"
+    class="duration-700 w-screen h-screen flex flex-col justify-between bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors select-none"
   >
     <!-- Header -->
     <header
-      class="w-full h-[5%] flex justify-between items-center bg-gray-300 dark:bg-gray-800 shadow-md px-4"
+      class="duration-700 w-full h-[5%] flex justify-between items-center bg-gray-300 dark:bg-gray-800 shadow-md px-4"
     >
       <!-- Logo -->
       <div class="flex items-center gap-4 h-full">
@@ -18,7 +18,7 @@
         </h1>
       </div>
       <div
-        class="flex items-center gap-4 h-full text-gray-700 dark:text-gray-200 font-bold text-sm"
+        class="duration-700 flex items-center gap-4 h-full text-gray-700 dark:text-gray-200 font-bold text-sm"
       >
         <ThemeToggle />
         <!-- GitHub Info -->
@@ -42,7 +42,9 @@
     <!-- Main Content -->
     <main class="w-full h-[85%] flex justify-center items-center gap-12">
       <!-- Sidebar -->
-      <aside class="w-1/6 h-full bg-gray-300 dark:bg-gray-800 p-4 box">
+      <aside
+        class="duration-700 w-1/6 h-full bg-gray-300 dark:bg-gray-800 p-4 box"
+      >
         <h1 class="text-2xl text-blue-500 mb-4 font-bold">作品目录</h1>
         <ul class="w-full flex flex-col gap-4">
           <li
@@ -59,7 +61,7 @@
 
       <!-- Work Display -->
       <section
-        class="w-4/6 h-full bg-gray-300 dark:bg-gray-800 flex flex-col justify-center items-center box"
+        class="duration-700 w-4/6 h-full bg-gray-300 dark:bg-gray-800 flex flex-col justify-center items-center box"
       >
         <router-view />
       </section>
@@ -67,7 +69,7 @@
 
     <!-- Footer -->
     <footer
-      class="w-full h-[5%] flex flex-col justify-center items-center bg-gray-300 dark:bg-gray-800 box"
+      class="duration-700 w-full h-[5%] flex flex-col justify-center items-center bg-gray-300 dark:bg-gray-800 box"
     >
       <p class="text-center text-gray-600 dark:text-gray-400 text-sm">
         © {{ year }}
