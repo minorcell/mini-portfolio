@@ -67,11 +67,11 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, onUnmounted } from "vue";
-import Dialog from "../components/ui/Dialog.vue";
-import WorkInfo from "../components/ui/WorkInfo.vue";
-import Button from "../components/ui/Button.vue";
-import { useColor } from "../hooks";
+import { useColor } from "../hooks/index";
 import { sleep } from "../utils/tools";
+
+import { Button, Dialog } from "../components/ui";
+import WorkInfo from "../components/WorkInfo.vue";
 
 const board = reactive(createEmptyGrid());
 const maxScore = ref(0);

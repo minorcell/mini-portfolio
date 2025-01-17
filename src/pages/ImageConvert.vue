@@ -45,10 +45,7 @@
         <Button type="primary" @click="convertImage" :disabled="!previewUrl">{{
           convertedUrl ? "转换完成" : "转换"
         }}</Button>
-        <Button
-          type="success"
-          @click="downloadImage"
-          :disabled="!convertedUrl"
+        <Button type="success" @click="downloadImage" :disabled="!convertedUrl"
           >下载</Button
         >
       </div>
@@ -58,8 +55,9 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import WorkInfo from "../components/ui/WorkInfo.vue";
-import Button from "../components/ui/Button.vue";
+
+import WorkInfo from "../components/WorkInfo.vue";
+import { Button } from "../components/ui";
 
 const previewUrl = ref<string | null>(null);
 const convertedUrl = ref<string | null>(null);
@@ -89,7 +87,7 @@ const convertImage = () => {
     canvas.height = image.height;
     ctx.drawImage(image, 0, 0);
 
-    // 转换为目标格式
+    // transfer canvas to blob
     canvas.toBlob((blob) => {
       if (blob) {
         convertedUrl.value = URL.createObjectURL(blob);

@@ -87,9 +87,9 @@ import { onMounted, ref, computed } from "vue";
 import { works } from "./data/portfolio";
 import { useRouter, useRoute } from "vue-router";
 import { useThemeStore } from "./stores/theme";
-import WorkItem from "./components/ui/WorkItem.vue";
+import WorkItem from "./components/WorkItem.vue";
 
-import ThemeToggle from "./components/ui/ThemeToggle.vue";
+import ThemeToggle from "./components/ThemeToggle.vue";
 
 const activeWork = ref<number | null>(null);
 const year = new Date().getFullYear();
