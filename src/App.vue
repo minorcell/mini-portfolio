@@ -9,7 +9,7 @@
       <!-- Logo -->
       <div class="flex items-center gap-4 h-full">
         <img
-          src="/src/assets/images/logo.png"
+          src="/src/assets/images/logo.webp"
           alt="logo"
           class="h-4/5 rounded"
         />
