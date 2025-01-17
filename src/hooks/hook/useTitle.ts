@@ -3,9 +3,9 @@ import { watch } from "vue";
 /**
  * custom Hook：useTitle
  * @param title - title
- * @param isCoverOrigin - isCoverOrigin, default true
+ * @param isCoverOrigin - isCoverOrigin, default false
  */
-export function useTitle(title: string, isCoverOrigin: boolean = true) {
+export function useTitle(title: string, isCoverOrigin: boolean = false) {
     // set new title
     const setTitle = (newTitle: string) => {
         document.title = newTitle;
