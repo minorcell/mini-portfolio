@@ -104,7 +104,7 @@ const themeStore = useThemeStore();
 const navigateTo = (path: string, index: number) => {
   router.push(path);
   activeWork.value = index;
-  useTitle(works[index].name, false);
+  useTitle(works[index].name);
 };
 
 // Check if a work is active
@@ -117,7 +117,7 @@ onMounted(() => {
     if (defaultWork) {
       router.replace(defaultWork.path);
       activeWork.value = 0;
-      useTitle(defaultWork.name, false);
+      useTitle(defaultWork.name);
     }
   }
 });
