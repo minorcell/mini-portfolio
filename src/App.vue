@@ -63,7 +63,11 @@
       <section
         class="duration-700 w-4/6 h-full bg-gray-300 dark:bg-gray-800 flex flex-col justify-center items-center box"
       >
-        <router-view />
+        <router-view v-slot="{ Component }">
+          <keep-alive>
+            <component :is="Component" />
+          </keep-alive>
+        </router-view>
       </section>
     </main>
 
