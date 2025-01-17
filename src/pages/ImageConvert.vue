@@ -8,19 +8,19 @@
 
     <!-- imags perview -->
     <div
-      class="mb-4 w-96 h-96 border-yellow-500 p-2 border-2 rounded flex justify-center items-center"
+      class="mb-4 w-96 h-96 border-yellow-500 p-2 border-4 border-dashed rounded flex justify-center items-center"
     >
       <img
         v-if="previewUrl"
         :src="previewUrl"
-        alt="预览"
+        alt="uploaded image"
         class="w-full h-auto border rounded"
       />
       <img
         @click="uploadImage"
         src="/src/assets/imageConvert/plus.svg"
         alt="default"
-        class="max-w-96 h-auto rounded"
+        class="max-w-96 h-auto rounded cursor-pointer slow_spin"
         v-else
       />
     </div>
@@ -115,4 +115,23 @@ const uploadImage = () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+    scale: 1;
+  } 
+  50% {
+    transform: rotate(360deg);
+    scale: 2;
+  }
+  100% {
+    transform: rotate(0deg);
+    scale: 1;
+  }
+}
+
+.slow_spin {
+  animation: spin 10s linear infinite;
+}
+</style>
