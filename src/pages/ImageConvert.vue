@@ -8,8 +8,15 @@
 
     <!-- imags perview -->
     <div
-      class="mb-4 w-96 h-96 border-yellow-500 p-2 border-4 border-dashed rounded flex justify-center items-center"
+      class="relative mb-4 w-96 h-96 border-yellow-500 p-2 border-4 border-dashed rounded flex justify-center items-center"
     >
+      <img
+        v-if="previewUrl"
+        src="/src/assets/imageConvert/clear.svg"
+        alt="clear button"
+        class="w-8 h-8 absolute top-0 right-0 cursor-pointer"
+        @click="clearImage"
+      />
       <img
         v-if="previewUrl"
         :src="previewUrl"
@@ -130,6 +137,11 @@ const statusText = computed(() => {
     return "开始转换";
   }
 });
+
+const clearImage = () => {
+  previewUrl.value = null;
+  convertedUrl.value = null;
+};
 </script>
 
 <style scoped>
