@@ -1,12 +1,12 @@
 <template>
   <button @click="toggleTheme" class="px-4 py-2 rounded text-white">
     <img
-      src="../../assets/images/sun.svg"
+      src="/src/assets/images/sun.svg"
       alt="sun"
       v-if="!isDark"
       class="w-6 h-6"
     />
-    <img src="../../assets/images/moon.svg" alt="moon" v-else class="w-6 h-6" />
+    <img src="/src/assets/images/moon.svg" alt="moon" v-else class="w-6 h-6" />
   </button>
 </template>
 
