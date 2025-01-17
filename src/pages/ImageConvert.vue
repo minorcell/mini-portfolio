@@ -42,9 +42,13 @@
         </select>
       </div>
       <div class="flex items-center justify-center gap-4">
-        <Button type="primary" @click="convertImage" :disabled="!previewUrl">{{
-          convertedUrl ? "转换完成" : "转换"
-        }}</Button>
+        <Button
+          type="primary"
+          @click="convertImage"
+          :disabled="!previewUrl"
+          :loading="isTransforming"
+          >{{ statusText }}</Button
+        >
         <Button type="success" @click="downloadImage" :disabled="!convertedUrl"
           >下载</Button
         >
@@ -54,7 +58,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 import WorkInfo from "../components/WorkInfo.vue";
 import { Button } from "../components/ui";
@@ -62,6 +66,7 @@ import { Button } from "../components/ui";
 const previewUrl = ref<string | null>(null);
 const convertedUrl = ref<string | null>(null);
 const selectedFormat = ref<string>("image/png");
+const isTransforming = ref<boolean>(false);
 const canvas = document.createElement("canvas");
 
 const onFileChange = (event: Event) => {
@@ -77,7 +82,7 @@ const onFileChange = (event: Event) => {
 
 const convertImage = () => {
   if (!previewUrl.value) return;
-
+  isTransforming.value = true;
   const image = new Image();
   image.onload = () => {
     const ctx = canvas.getContext("2d");
@@ -95,6 +100,7 @@ const convertImage = () => {
     }, selectedFormat.value);
   };
   image.src = previewUrl.value;
+  isTransforming.value = false;
 };
 
 const downloadImage = () => {
@@ -113,6 +119,17 @@ const uploadImage = () => {
   input.click();
   input.addEventListener("change", onFileChange);
 };
+
+// computed status by url and isTransforming
+const statusText = computed(() => {
+  if (isTransforming.value) {
+    return "正在转换";
+  } else if (convertedUrl.value) {
+    return "转换完成";
+  } else {
+    return "开始转换";
+  }
+});
 </script>
 
 <style scoped>
@@ -120,7 +137,7 @@ const uploadImage = () => {
   0% {
     transform: rotate(0deg);
     scale: 1;
-  } 
+  }
   50% {
     transform: rotate(360deg);
     scale: 2;

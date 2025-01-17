@@ -1,6 +1,6 @@
 <template>
   <button
-    class="px-4 py-2 rounded transition-colors duration-200"
+    class="px-4 py-2 rounded transition-colors duration-200 flex items-center"
     :class="[
       buttonClass,
       sizeClass,
