@@ -21,8 +21,15 @@
           class="w-3/5 h-full flex justify-center items-center rounded-lg overflow-hidden"
         >
           <img
-            :src="qrCodeImage ? qrCodeImage : '/src/assets/QRCode/qrcode.svg'"
+            v-if="qrCodeImage"
+            :src="qrCodeImage"
             alt="Generated QR Code"
+            class="w-full h-auto"
+          />
+          <img
+            v-else
+            src="/src/assets/QRCode/qrcode.svg"
+            alt="default"
             class="w-full h-auto"
           />
         </div>
