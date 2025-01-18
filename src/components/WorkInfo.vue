@@ -3,8 +3,8 @@
   <div
     class="w-full flex flex-col items-start justify-center text-gray-700 dark:text-gray-100"
   >
-    <h1 class="text-4xl font-bold mb-2">{{ props.workName }}</h1>
-    <p class="text-sm">
+    <h1 class="duration-700 text-4xl font-bold mb-2">{{ props.workName }}</h1>
+    <p class="text-sm duration-700">
       操作指南：
       {{ props.workDescription }}
     </p>

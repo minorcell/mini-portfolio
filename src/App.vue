@@ -13,7 +13,9 @@
           alt="logo"
           class="h-4/5 rounded"
         />
-        <h1 class="text-2xl font-bold text-gray-700 dark:text-gray-200">
+        <h1
+          class="duration-700 text-2xl font-bold text-gray-700 dark:text-gray-200"
+        >
           Mini-Portfolio | 小小案例集
         </h1>
       </div>
@@ -45,7 +47,9 @@
       <aside
         class="duration-700 w-1/6 h-full bg-gray-300 dark:bg-gray-800 p-4 box"
       >
-        <h1 class="text-2xl text-blue-500 mb-4 font-bold">作品目录</h1>
+        <h1 class="duration-700 text-2xl text-blue-500 mb-4 font-bold">
+          作品目录
+        </h1>
         <ul class="w-full flex flex-col gap-4">
           <li
             v-for="(work, index) in works"
@@ -75,7 +79,9 @@
     <footer
       class="duration-700 w-full h-[5%] flex flex-col justify-center items-center bg-gray-300 dark:bg-gray-800 box"
     >
-      <p class="text-center text-gray-600 dark:text-gray-400 text-sm">
+      <p
+        class="duration-700 text-center text-gray-600 dark:text-gray-400 text-sm"
+      >
         © {{ year }}
         <a
           target="_blank"
