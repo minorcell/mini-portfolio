@@ -17,9 +17,9 @@ const routes = [
         component: () => import('../pages/ImageConvert.vue')
     },
     {
-        path: '/i18n',
-        name: 'i18n',
-        component: () => import('../pages/I18N.vue'),
+        path: "/qrcode",
+        name: "qrcode",
+        component: () => import('../pages/QRCode.vue')
     }
 ]
 
@@ -28,4 +28,4 @@ const router = createRouter({
     routes,
 })
 
-export default router
+export default router;

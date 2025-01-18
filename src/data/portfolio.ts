@@ -27,8 +27,8 @@ export const works: Work[] = sortByStatus([
         path: "/image-convert",
     },
     {
-        name: "i18n国际化",
+        name: "二维码生成",
         status: "开发中",
-        path: "/i18n",
+        path: "/qrcode",
     }
 ])

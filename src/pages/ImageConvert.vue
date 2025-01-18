@@ -2,7 +2,7 @@
   <div class="work">
     <!-- Info -->
     <WorkInfo
-      work-name="图片格式转换工具"
+      work-name="图片转换"
       work-description="上传图片，选择目标格式，点击转换按钮，然后点击下载按钮下载转换后的图片。"
     />
 
