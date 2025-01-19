@@ -7,14 +7,14 @@
     />
 
     <div
-      class="w-96 h-96 grid grid-rows-4 grid-cols-4 gap-2 rounded-lg p-2 bg-green-500"
+      class="duration-700 w-96 h-96 grid grid-rows-4 grid-cols-4 gap-2 rounded-lg p-2 bg-green-500 border-2 border-gray-700 dark:border-gray-100"
     >
       <!-- Render board cells -->
       <div
         v-for="(cell, index) in board.flat()"
         :key="index"
         :style="{ backgroundColor: getColor(cell) }"
-        class="flex items-center justify-center bg-gray-700 dark:bg-gray-100 rounded-lg font-bold text-3xl text-gray-700"
+        class="shaow_box flex items-center justify-center bg-gray-700 dark:bg-gray-100 rounded-lg font-bold text-3xl text-gray-700"
       >
         {{ cell || "" }}
       </div>
@@ -36,7 +36,7 @@
         <Button
           type="warning"
           @click="restartGame"
-          :disabled="gameStatus !== 'playing'"
+          :disabled="gameStatus !== 'playing' && gameStatus !== 'lose'"
         >
           重新开始
         </Button>
@@ -178,6 +178,18 @@ function handleKeyDown(e: KeyboardEvent) {
     case "ArrowRight":
       newBoard = slideRight(newBoard);
       break;
+    case "w":
+      newBoard = slideUp(newBoard);
+      break;
+    case "s":
+      newBoard = slideDown(newBoard);
+      break;
+    case "a":
+      newBoard = slideLeft(newBoard);
+      break;
+    case "d":
+      newBoard = slideRight(newBoard);
+      break;
     default:
       return;
   }
@@ -211,3 +223,9 @@ onDeactivated(() => {
   window.removeEventListener("keydown", handleKeyDown);
 });
 </script>
+
+<style scoped>
+.shaow_box {
+  box-shadow: inset -8px -8px 13px #b5b5b5, inset 8px 8px 13px #ffffff;
+}
+</style>
