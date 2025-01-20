@@ -1,7 +1,7 @@
 <template>
   <div
     class="duration-700 w-full flex items-center justify-between rounded-lg bg-gray-100 dark:bg-gray-800"
-    :class="[props.outline ? 'border dark:border-gray-500' : 'border-none']"
+    :class="[props.outline ? 'border border-gray-500' : 'border-none']"
   >
     <!-- Input Field -->
     <input

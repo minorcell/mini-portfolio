@@ -1,7 +1,8 @@
 <template>
   <div
-    class="duration-300 w-full p-2 bg-gray-400 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 box"
+    class="duration-700 w-full p-2 bg-gray-400 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 box"
     :class="{ 'bg-gray-400 dark:bg-gray-600': isActive(props.work.path) }"
+    @click="$router.push(props.work.path)"
   >
     <h2
       class="duration-700 text-xl font-bold text-gray-700 dark:text-gray-200 mb-2"
@@ -32,5 +33,3 @@ function isActive(path: string) {
   return route.path === path;
 }
 </script>
-
-<style scoped lang="scss"></style>

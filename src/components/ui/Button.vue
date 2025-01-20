@@ -1,6 +1,6 @@
 <template>
   <button
-    class="px-4 py-2 rounded transition-colors duration-200 flex items-center"
+    class="shadow_button px-4 py-2 rounded transition-colors duration-200 flex items-center"
     :class="[
       buttonClass,
       sizeClass,
@@ -102,3 +102,9 @@ const handleClick = (event: MouseEvent) => {
   }
 };
 </script>
+
+<style scoped>
+.shadow_button {
+  box-shadow: inset -3px 3px 6px #aaaaaa, inset 3px -3px 6px #ffffff;
+}
+</style>

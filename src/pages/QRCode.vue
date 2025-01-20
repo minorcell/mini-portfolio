@@ -34,9 +34,7 @@
           />
         </div>
         <!-- Controls -->
-        <div
-          class="w-2/5 h-full flex flex-col justify-end items-end gap-8"
-        >
+        <div class="w-2/5 h-full flex flex-col justify-end items-end gap-8">
           <Button
             size="large"
             :disabled="!url"
@@ -65,8 +63,8 @@ import WorkInfo from "../components/WorkInfo.vue";
 import { Button, Input } from "../components/ui";
 import QRCode from "qrcode";
 
-const url = ref("");
-const qrCodeImage = ref("");
+const url = ref<string>("");
+const qrCodeImage = ref<string>("");
 
 // generate QR Code
 const generateQRCode = async () => {
