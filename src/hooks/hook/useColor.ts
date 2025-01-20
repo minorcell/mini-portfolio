@@ -1,6 +1,6 @@
 export function useColor() {
     const cellColors: Record<number, string> = {
-        0: "#CDC1B4",      // 空
+        0: "#CDC1B4",      // empty
         2: "#EEE4DA",      // 2
         4: "#EDE0C8",      // 4
         8: "#F2B179",      // 8

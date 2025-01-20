@@ -2,6 +2,7 @@
   <div
     class="duration-700 w-screen h-screen flex flex-col justify-between bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors select-none"
   >
+    <Mouse />
     <!-- Header -->
     <header
       class="duration-700 w-full h-[5%] flex justify-between items-center bg-gray-300 dark:bg-gray-800 shadow-md px-4"
@@ -12,6 +13,7 @@
           src="/src/assets/images/logo.webp"
           alt="logo"
           class="h-4/5 rounded"
+          @click="$router.push('/')"
         />
         <h1
           class="duration-700 text-2xl font-bold text-gray-700 dark:text-gray-200"
@@ -101,6 +103,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useThemeStore } from "./stores/theme";
 import { useTitle } from "./hooks";
 import WorkItem from "./components/WorkItem.vue";
+import Mouse from "./components/ui/Mouse.vue";
 
 import ThemeToggle from "./components/ThemeToggle.vue";
 
