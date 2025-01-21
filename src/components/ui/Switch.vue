@@ -1,6 +1,6 @@
 <template>
   <div
-    class="duration-700 w-14 h-6 p-1 bg-green-500 rounded-full shadow-xl flex items-center cursor-pointer"
+    class="duration-700 w-12 h-6 p-1 bg-green-500 rounded-full shadow-xl flex items-center cursor-pointer"
     @click="toggleSwitch"
     :class="{ 'bg-red-500': !props.modelValue }"
     @mouseenter="mouseEnter = true"
@@ -10,7 +10,7 @@
     <span
       class="w-4 h-4 bg-white rounded-full shadow-md transition-transform duration-300 flex items-center justify-center"
       :class="{
-        'translate-x-8': props.modelValue, // If switched on, move the ball to the right
+        'translate-x-6': props.modelValue, // If switched on, move the ball to the right
         'translate-x-0': !props.modelValue, // If switched off, keep the ball at the left
       }"
     >
@@ -43,7 +43,3 @@ const toggleSwitch = () => {
   emit("update:modelValue", !props.modelValue);
 };
 </script>
-
-<style scoped>
-/* Add optional custom styles here if needed */
-</style>

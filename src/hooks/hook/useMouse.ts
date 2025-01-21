@@ -16,6 +16,5 @@ export function useMouse() {
         document.removeEventListener('mousemove', updateMouse);
     });
 
-
-    return [position.x, position.y];
+    return position;
 }

@@ -1,12 +1,13 @@
 <template>
   <div
     ref="cursor"
-    class="custom-cursor fixed cursor-none z-50 rounded-full w-4 h-4 bg-gray-800 dark:bg-gray-100 border-2 border-gray-800 dark:border-gray-800 bg-opacity-50"
+    class="custom-cursor fixed cursor-none z-50 rounded-full w-4 h-4 border-2 border-gray-800 dark:border-gray-100"
     :style="{
       left: `${x}px`,
       top: `${y}px`,
       transform: cursorTransform,
     }"
+    :class="{ 'bg-orange-500 border-none': isMouseOut }"
   ></div>
 </template>
 
@@ -18,6 +19,7 @@ const y = ref(0);
 
 const cursorTransform = ref("");
 const cursor = ref<HTMLElement | null>(null);
+const isMouseOut = ref<boolean>(false);
 
 const centerX = ref(0);
 const centerY = ref(0);
@@ -29,12 +31,14 @@ const updateMousePosition = (e: MouseEvent) => {
 
 const handleMouseEnter = () => {
   cursorTransform.value = "scale(1.2)";
+  isMouseOut.value = false;
 };
 
 const handleMouseLeave = () => {
   cursorTransform.value = "";
   x.value = centerX.value;
   y.value = centerY.value;
+  isMouseOut.value = true;
 };
 
 const handleMouseDown = () => {

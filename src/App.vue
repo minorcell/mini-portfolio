@@ -12,8 +12,9 @@
         <img
           src="/src/assets/images/logo.webp"
           alt="logo"
-          class="h-4/5 rounded"
+          class="h-4/5 rounded duration-700"
           @click="$router.push('/')"
+          :style="logoStyle"
         />
         <h1
           class="duration-700 text-2xl font-bold text-gray-700 dark:text-gray-200"
@@ -24,7 +25,8 @@
       <div
         class="duration-700 flex items-center gap-4 h-full text-gray-700 dark:text-gray-200 font-bold text-sm"
       >
-        <Switch v-model="isMouse" />
+        <Switch v-model="isFullScreen" />
+
         <ThemeToggle />
         <!-- GitHub Info -->
         <a href="https://github.com/minorcell/mini-portfolio" target="_blank">
@@ -98,22 +100,23 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, watch } from "vue";
 import { works } from "./data/portfolio";
 import { useRouter, useRoute } from "vue-router";
 import { useThemeStore } from "./stores/theme";
-import { useTitle } from "./hooks";
+import { useTitle, useMouse } from "./hooks";
 import WorkItem from "./components/WorkItem.vue";
 import { Switch, Mouse } from "./components/ui";
 
 import ThemeToggle from "./components/ThemeToggle.vue";
 
 const activeWork = ref<number | null>(null);
-const isMouse = ref<boolean>(true);
+const isFullScreen = ref<boolean>(false);
 const year = new Date().getFullYear();
 const router = useRouter();
 const route = useRoute();
 const themeStore = useThemeStore();
+const mouseInfo = useMouse();
 
 // Navigate to a specific path
 const navigateTo = (path: string, index: number) => {
@@ -139,4 +142,27 @@ onMounted(() => {
 
 // Dark mode toggle
 const isDark = computed(() => themeStore.isDark);
+
+const logoStyle = computed(() => {
+  return {
+    transform: `rotateX(${mouseInfo.x / 10}deg) rotateY(${
+      mouseInfo.y / 10
+    }deg) rotateZ(${(mouseInfo.x + mouseInfo.y) / 10}deg)`,
+  };
+});
+
+// watch isFullScreen
+watch(
+  isFullScreen,
+  () => {
+    if (isFullScreen.value) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  },
+  { immediate: true }
+);
 </script>
+
+<style scoped></style>
