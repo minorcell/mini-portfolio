@@ -18,7 +18,7 @@
         <h1
           class="duration-700 text-2xl font-bold text-gray-700 dark:text-gray-200"
         >
-          Mini-Portfolio | 小小案例集
+          Mini-Portfolio | 简单且好用
         </h1>
       </div>
       <div
