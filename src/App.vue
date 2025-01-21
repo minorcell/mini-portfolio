@@ -24,6 +24,7 @@
       <div
         class="duration-700 flex items-center gap-4 h-full text-gray-700 dark:text-gray-200 font-bold text-sm"
       >
+        <Switch v-model="isMouse" />
         <ThemeToggle />
         <!-- GitHub Info -->
         <a href="https://github.com/minorcell/mini-portfolio" target="_blank">
@@ -50,7 +51,7 @@
         class="duration-700 w-1/6 h-full bg-gray-300 dark:bg-gray-800 p-4 box"
       >
         <h1 class="duration-700 text-2xl text-blue-500 mb-4 font-bold">
-          作品目录
+          导航栏
         </h1>
         <ul class="w-full flex flex-col gap-4">
           <li
@@ -103,11 +104,12 @@ import { useRouter, useRoute } from "vue-router";
 import { useThemeStore } from "./stores/theme";
 import { useTitle } from "./hooks";
 import WorkItem from "./components/WorkItem.vue";
-import Mouse from "./components/ui/Mouse.vue";
+import { Switch, Mouse } from "./components/ui";
 
 import ThemeToggle from "./components/ThemeToggle.vue";
 
 const activeWork = ref<number | null>(null);
+const isMouse = ref<boolean>(true);
 const year = new Date().getFullYear();
 const router = useRouter();
 const route = useRoute();
