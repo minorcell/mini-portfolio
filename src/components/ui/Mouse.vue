@@ -1,5 +1,4 @@
 <template>
-  <!-- 自定义鼠标指针 -->
   <div
     ref="cursor"
     class="custom-cursor fixed cursor-none z-50 rounded-full w-4 h-4 bg-gray-800 dark:bg-gray-100 border-2 border-gray-800 dark:border-gray-800 bg-opacity-50"
@@ -26,19 +25,16 @@ const updateMousePosition = (e: MouseEvent) => {
   y.value = e.pageY;
 };
 
-// 鼠标悬停时切换样式
 const handleMouseEnter = () => {
   cursorTransform.value = "scale(1.2)";
 };
 
-// 鼠标离开时恢复默认样式
 const handleMouseLeave = () => {
   cursorTransform.value = "";
 };
 
-// 鼠标按下时切换样式
 const handleMouseDown = () => {
-  cursorTransform.value = "scale(0.5)";
+  cursorTransform.value = "scale(0.8)";
 };
 
 const handleMouseUp = () => {

@@ -10,3 +10,8 @@
 .work {
   @apply w-full h-full flex flex-col justify-between items-center p-4;
 }
+
+/* remove global cursor */
+* {
+  cursor: none !important;
+}
