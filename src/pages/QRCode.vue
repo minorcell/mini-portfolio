@@ -11,11 +11,11 @@
       class="w-full flex flex-col items-center justify-evenly p-10 gap-8 mt-5"
     >
       <!-- Input -->
-      <div class="w-4/5">
+      <div class="w-3/5">
         <Input v-model="url" type="text" placeholder="请输入网址" />
       </div>
       <!-- Generate -->
-      <div class="w-4/5 h-auto flex justify-between items-center mt-5">
+      <div class="w-3/5 h-auto flex justify-between items-center mt-5">
         <!-- QR Code -->
         <div
           class="w-3/5 h-full flex justify-center items-center rounded-lg overflow-hidden"
