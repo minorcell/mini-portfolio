@@ -6,7 +6,7 @@
       work-description="上传图片，选择目标格式，点击转换按钮，然后点击下载按钮下载转换后的图片。"
     />
 
-    <!-- imags perview -->
+    <!-- images preview -->
     <div
       class="relative mb-4 w-96 h-96 border-yellow-500 p-2 border-4 border-dashed rounded flex justify-center items-center"
     >
@@ -32,6 +32,42 @@
       />
     </div>
 
+    <!-- Image Info: size 、 format 、 resolution -->
+    <div
+      class="duration-700 w-1/2 h-12 flex justify-evenly items-center mb-4 text-gray-700 dark:text-gray-100"
+    >
+      <div>
+        原体积：{{
+          originalSize
+            ? originalSize > 1024
+              ? (originalSize / 1024).toFixed(2)
+              : originalSize
+            : "--"
+        }}
+        {{ originalSize ? (originalSize > 1024 ? "MB" : "KB") : "KB" }}
+      </div>
+      <div>
+        转换后体积：{{
+          convertedSize
+            ? convertedSize > 1024
+              ? (convertedSize / 1024).toFixed(2)
+              : convertedSize
+            : "--"
+        }}
+        {{ convertedSize ? (convertedSize > 1024 ? "MB" : "KB") : "KB" }}
+      </div>
+      <div>
+        体积转换比例：
+        <span
+          :class="{
+            'text-red-500': convertedSize > originalSize,
+            'text-green-500': convertedSize < originalSize,
+          }"
+          >{{ convertedSize ? (convertedSize / originalSize).toFixed(2) : "—" }}
+        </span>
+      </div>
+    </div>
+
     <div class="w-1/2 px-4 py-2 flex items-center justify-between">
       <!-- Controls -->
       <div class="flex items-center justify-center">
@@ -46,6 +82,8 @@
           <option value="image/png">PNG</option>
           <option value="image/jpeg">JPEG</option>
           <option value="image/webp">WEBP</option>
+          <option value="image/svg+xml">SVG</option>
+          <option value="image/gif">GIF</option>
         </select>
       </div>
       <div class="flex items-center justify-center gap-4">
@@ -74,6 +112,8 @@ const previewUrl = ref<string | null>(null);
 const convertedUrl = ref<string | null>(null);
 const selectedFormat = ref<string>("image/png");
 const isTransforming = ref<boolean>(false);
+const originalSize = ref<number>(0);
+const convertedSize = ref<number>(0);
 const canvas = document.createElement("canvas");
 
 const onFileChange = (event: Event) => {
@@ -82,6 +122,7 @@ const onFileChange = (event: Event) => {
     const reader = new FileReader();
     reader.onload = () => {
       previewUrl.value = reader.result as string;
+      originalSize.value = parseFloat((file.size / 1024).toFixed(2));
     };
     reader.readAsDataURL(file);
   }
@@ -103,6 +144,7 @@ const convertImage = () => {
     canvas.toBlob((blob) => {
       if (blob) {
         convertedUrl.value = URL.createObjectURL(blob);
+        convertedSize.value = parseFloat((blob.size / 1024).toFixed(2)); // 转换为KB并保留两位小数
       }
     }, selectedFormat.value);
   };
@@ -127,6 +169,13 @@ const uploadImage = () => {
   input.addEventListener("change", onFileChange);
 };
 
+const clearImage = () => {
+  previewUrl.value = null;
+  convertedUrl.value = null;
+  originalSize.value = 0;
+  convertedSize.value = 0;
+};
+
 // computed status by url and isTransforming
 const statusText = computed(() => {
   if (isTransforming.value) {
@@ -137,30 +186,4 @@ const statusText = computed(() => {
     return "开始转换";
   }
 });
-
-const clearImage = () => {
-  previewUrl.value = null;
-  convertedUrl.value = null;
-};
 </script>
-
-<style scoped>
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-    scale: 1;
-  }
-  50% {
-    transform: rotate(360deg);
-    scale: 2;
-  }
-  100% {
-    transform: rotate(0deg);
-    scale: 1;
-  }
-}
-
-.slow_spin {
-  animation: spin 10s linear infinite;
-}
-</style>

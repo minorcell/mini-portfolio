@@ -76,5 +76,6 @@ onUnmounted(() => {
   pointer-events: none;
   transform-origin: center;
   transition: transform 0.2s ease-in-out;
+  box-shadow: 0px 0px 10px rgb(255, 255, 255);
 }
 </style>
