@@ -8,13 +8,16 @@
 
     <!-- images preview -->
     <div
-      class="relative mb-4 w-96 h-96 border-yellow-500 p-2 border-4 border-dashed rounded flex justify-center items-center"
+      class="relative mb-4 w-96 h-96 p-2 border-4 border-dashed rounded-xl flex justify-center items-center border-yellow-500"
     >
       <img
+        @mouseenter="isMouseInClose = true"
+        @mouseleave="isMouseInClose = false"
         v-if="previewUrl"
         src="/src/assets/imageConvert/clear.svg"
         alt="clear button"
         class="w-8 h-8 absolute top-0 right-0 cursor-pointer"
+        :class="{ 'animate-spin': isMouseInClose }"
         @click="clearImage"
       />
       <img
@@ -112,6 +115,7 @@ const previewUrl = ref<string | null>(null);
 const convertedUrl = ref<string | null>(null);
 const selectedFormat = ref<string>("image/png");
 const isTransforming = ref<boolean>(false);
+const isMouseInClose = ref<boolean>(false);
 const originalSize = ref<number>(0);
 const convertedSize = ref<number>(0);
 const canvas = document.createElement("canvas");
@@ -187,3 +191,32 @@ const statusText = computed(() => {
   }
 });
 </script>
+
+<style scoped>
+@keyframes spin {
+  0% {
+    transform: rotate(0deg) translate(50%, -50%);
+    scale: 1;
+  }
+  25% {
+    transform: rotate(90deg) translate(50%, 50%);
+    scale: 1.1;
+  }
+  50% {
+    transform: rotate(360deg) translate(-50%, 50%);
+    scale: 2;
+  }
+  75% {
+    transform: rotate(540deg) translate(-50%, -50%);
+    scale: 1.9;
+  }
+  100% {
+    transform: rotate(720deg) translate(50%, -50%);
+    scale: 1;
+  }
+}
+
+.slow_spin {
+  animation: spin 10s linear infinite;
+}
+</style>
