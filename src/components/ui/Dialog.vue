@@ -19,18 +19,15 @@
       <div
         class="flex justify-end space-x-4 text-gray-700 dark:text-gray-100 font-bold"
       >
-        <button
-          class="px-4 py-2 bg-gray-500 rounded hover:bg-gray-700"
-          @click="handleCancel"
-        >
+        <Button type="info" @click="handleCancel">
           {{ cancelContent }}
-        </button>
-        <button
-          class="px-4 py-2 bg-yellow-500 rounded hover:bg-yellow-700"
+        </Button>
+        <Button
+          type="success"
           @click="handleConfirm"
         >
           {{ confirmContent }}
-        </button>
+        </Button>
       </div>
     </div>
   </div>
@@ -38,6 +35,7 @@
 
 <script lang="ts" setup>
 import { defineProps, defineEmits } from "vue";
+import Button from "./Button.vue";
 
 defineOptions({
   name: "Dialog",
@@ -62,10 +60,11 @@ defineProps({
   },
 });
 
-const emit = defineEmits(["update:visible", "confirm"]);
+const emit = defineEmits(["update:visible", "confirm", "cancel"]);
 
 const handleCancel = () => {
   emit("update:visible", false);
+  emit("cancel");
 };
 
 const handleConfirm = () => {
