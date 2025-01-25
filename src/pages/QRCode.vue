@@ -12,11 +12,7 @@
     >
       <!-- Input -->
       <div class="w-3/5">
-        <Input
-          v-model="url"
-          type="text"
-          placeholder="请输入网址"
-        />
+        <Input v-model="url" type="text" placeholder="请输入网址" />
       </div>
       <!-- Generate -->
       <div class="w-3/5 h-auto flex justify-between items-center mt-5">
@@ -79,7 +75,7 @@ const generateQRCode = async () => {
 const downloadQRCode = () => {
   const link = document.createElement("a");
   link.href = qrCodeImage.value;
-  link.download = "qrcode.png";
+  link.download = "qrcode.webp";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
