@@ -13,7 +13,7 @@
           src="/src/assets/images/logo.webp"
           alt="logo"
           class="h-4/5 rounded duration-700"
-          @click="$router.push('/')"
+          @click="$router.push(works[0].path)"
           :style="logoStyle"
         />
         <h1
@@ -73,8 +73,8 @@
         class="duration-700 w-4/6 h-full bg-gray-300 dark:bg-gray-800 flex flex-col justify-center items-center box"
       >
         <router-view v-slot="{ Component }">
-          <keep-alive>
-            <component :is="Component" />
+          <keep-alive exclude="qrcode">
+            <component :is="Component" :key="$route.fullPath" />
           </keep-alive>
         </router-view>
       </section>
@@ -130,7 +130,7 @@ const isActive = (path: string) => route.path === path;
 
 // Set default path on mount
 onMounted(() => {
-  if (!route.path || route.path === "/") {
+  if (!route.path) {
     const defaultWork = works[0];
     if (defaultWork) {
       router.replace(defaultWork.path);
@@ -152,17 +152,13 @@ const logoStyle = computed(() => {
 });
 
 // watch isFullScreen
-watch(
-  isFullScreen,
-  () => {
-    if (isFullScreen.value) {
-      document.documentElement.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
-  },
-  { immediate: true }
-);
+watch(isFullScreen, () => {
+  if (isFullScreen.value) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+});
 </script>
 
 <style scoped></style>
