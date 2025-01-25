@@ -169,6 +169,7 @@ function startGame() {
 }
 
 function restartGame() {
+  maxScore.value = 0;
   stopAI();
   startGame();
 }
