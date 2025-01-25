@@ -11,13 +11,10 @@
       class="relative mb-4 w-96 h-96 p-2 border-4 border-dashed rounded-xl flex justify-center items-center border-yellow-500"
     >
       <img
-        @mouseenter="isMouseInClose = true"
-        @mouseleave="isMouseInClose = false"
         v-if="previewUrl"
         src="/src/assets/imageConvert/clear.svg"
         alt="clear button"
-        class="w-8 h-8 absolute top-0 right-0 cursor-pointer"
-        :class="{ 'animate-spin': isMouseInClose }"
+        class="w-8 h-8 absolute top-0 right-0 cursor-pointer hover:animate-spin"
         @click="clearImage"
       />
       <img
@@ -115,7 +112,6 @@ const previewUrl = ref<string | null>(null);
 const convertedUrl = ref<string | null>(null);
 const selectedFormat = ref<string>("image/png");
 const isTransforming = ref<boolean>(false);
-const isMouseInClose = ref<boolean>(false);
 const originalSize = ref<number>(0);
 const convertedSize = ref<number>(0);
 const canvas = document.createElement("canvas");
