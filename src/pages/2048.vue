@@ -7,7 +7,7 @@
     />
 
     <div
-      class="duration-700 w-96 h-96 grid grid-rows-4 grid-cols-4 gap-2 rounded-lg p-2 bg-green-500 border-2 border-gray-700 dark:border-gray-100"
+      class="duration-700 w-[30rem] h-[30rem] grid grid-rows-5 grid-cols-5 gap-2 rounded-lg p-2 bg-green-500 border-2 border-gray-700 dark:border-gray-100"
     >
       <!-- Render board cells -->
       <div
@@ -21,24 +21,32 @@
     </div>
 
     <!-- Controls -->
-    <div class="w-96 h-auto flex items-center justify-between gap-4 mt-4 pb-4">
+    <div class="w-2/3 h-auto flex items-center justify-between gap-4 mt-4 pb-4">
       <span class="text-2xl font-bold text-gray-700 dark:text-gray-100"
-        >分数：{{ maxScore || "00" }}
+        >当前最大分数：{{ maxScore || "00" }}
       </span>
       <div class="flex items-center justify-center gap-4 text-white font-bold">
         <Button
           type="primary"
           @click="startGame"
-          :disabled="gameStatus !== 'playing'"
+          :disabled="gameStatus !== 'playing' || isAIPlaying"
         >
           开始游戏
         </Button>
         <Button
           type="warning"
           @click="restartGame"
-          :disabled="gameStatus !== 'playing' && gameStatus !== 'lose'"
+          :disabled="!isAIPlaying || gameStatus !== 'playing'"
         >
           重新开始
+        </Button>
+        <Button
+          type="success"
+          @click="autoPlayAI"
+          :loading="isAIPlaying"
+          :disabled="isAIPlaying || gameStatus !== 'playing'"
+        >
+          AI PLAY
         </Button>
       </div>
     </div>
@@ -49,6 +57,7 @@
       title="2048游戏提示"
       cancel-content="关闭"
       confirm-content="重新开始"
+      @cancel="restartGame"
       @confirm="handleConfirm"
       @update:visible="showDialog = $event"
     >
@@ -77,8 +86,10 @@ const board = reactive(createEmptyGrid());
 const maxScore = ref(0);
 const gameStatus = ref<"playing" | "win" | "lose">("playing");
 const showDialog = ref<boolean>(false);
+const isAIPlaying = ref(false);
+const aiRunning = ref(false);
 
-const SIZE = 4;
+const SIZE = 5;
 const { getColor } = useColor();
 
 function createEmptyGrid() {
@@ -154,9 +165,11 @@ function startGame() {
   gameStatus.value = "playing";
   board.splice(0, board.length, ...createEmptyGrid());
   addRandomTile(board);
+  addRandomTile(board);
 }
 
 function restartGame() {
+  stopAI();
   startGame();
 }
 
@@ -178,22 +191,14 @@ function handleKeyDown(e: KeyboardEvent) {
     case "ArrowRight":
       newBoard = slideRight(newBoard);
       break;
-    case "w":
-      newBoard = slideUp(newBoard);
-      break;
-    case "s":
-      newBoard = slideDown(newBoard);
-      break;
-    case "a":
-      newBoard = slideLeft(newBoard);
-      break;
-    case "d":
-      newBoard = slideRight(newBoard);
-      break;
     default:
       return;
   }
 
+  updateBoard(newBoard);
+}
+
+function updateBoard(newBoard: number[][]) {
   maxScore.value = Math.max(...newBoard.flat(), maxScore.value);
 
   addRandomTile(newBoard);
@@ -202,10 +207,152 @@ function handleKeyDown(e: KeyboardEvent) {
   if (board.flat().includes(2048)) {
     gameStatus.value = "win";
     showDialog.value = true;
+    stopAI();
   } else if (board.flat().every((cell) => cell !== 0)) {
     gameStatus.value = "lose";
     showDialog.value = true;
+    stopAI();
   }
+}
+
+function evaluateBoard(grid: number[][]): number {
+  let emptyTiles = 0;
+  let maxTile = 0;
+  let smoothness = 0;
+  let monotonicity = 0;
+
+  for (let i = 0; i < SIZE; i++) {
+    for (let j = 0; j < SIZE; j++) {
+      if (grid[i][j] === 0) {
+        emptyTiles++;
+      } else {
+        maxTile = Math.max(maxTile, grid[i][j]);
+        if (i > 0 && grid[i - 1][j] !== 0) {
+          smoothness -= Math.abs(grid[i][j] - grid[i - 1][j]);
+        }
+        if (j > 0 && grid[i][j - 1] !== 0) {
+          smoothness -= Math.abs(grid[i][j] - grid[i][j - 1]);
+        }
+        if (i > 0 && grid[i - 1][j] > grid[i][j]) {
+          monotonicity -= grid[i - 1][j] - grid[i][j];
+        }
+        if (j > 0 && grid[i][j - 1] > grid[i][j]) {
+          monotonicity -= grid[i][j - 1] - grid[i][j];
+        }
+      }
+    }
+  }
+
+  return emptyTiles * 10 + maxTile + smoothness + monotonicity;
+}
+
+function expectimax(
+  grid: number[][],
+  depth: number,
+  isMaximizingPlayer: boolean
+): number {
+  if (depth === 0) {
+    return evaluateBoard(grid);
+  }
+
+  if (isMaximizingPlayer) {
+    let maxEval = -Infinity;
+    const moves = [slideUp, slideDown, slideLeft, slideRight];
+
+    for (const move of moves) {
+      const newBoard = JSON.parse(JSON.stringify(grid));
+      const movedBoard = move(newBoard);
+      if (JSON.stringify(movedBoard) !== JSON.stringify(grid)) {
+        const evaluation = expectimax(movedBoard, depth - 1, false);
+        maxEval = Math.max(maxEval, evaluation);
+      }
+    }
+
+    return maxEval;
+  } else {
+    let sumEval = 0;
+    let emptyTiles = 0;
+
+    for (let i = 0; i < SIZE; i++) {
+      for (let j = 0; j < SIZE; j++) {
+        if (grid[i][j] === 0) {
+          emptyTiles++;
+        }
+      }
+    }
+
+    for (let i = 0; i < SIZE; i++) {
+      for (let j = 0; j < SIZE; j++) {
+        if (grid[i][j] === 0) {
+          const newBoard = JSON.parse(JSON.stringify(grid));
+          newBoard[i][j] = 2;
+          sumEval += 0.9 * expectimax(newBoard, depth - 1, true);
+
+          newBoard[i][j] = 4;
+          sumEval += 0.1 * expectimax(newBoard, depth - 1, true);
+        }
+      }
+    }
+
+    return emptyTiles === 0 ? 0 : sumEval / emptyTiles;
+  }
+}
+
+async function autoPlayAI() {
+  if (gameStatus.value !== "playing" || isAIPlaying.value) return;
+
+  isAIPlaying.value = true;
+  aiRunning.value = true;
+
+  while (gameStatus.value === "playing" && aiRunning.value) {
+    const moves = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+    let bestMove = null;
+    let bestScore = -Infinity;
+
+    for (const move of moves) {
+      const newBoard = JSON.parse(JSON.stringify(board));
+      let movedBoard;
+
+      switch (move) {
+        case "ArrowUp":
+          movedBoard = slideUp(newBoard);
+          break;
+        case "ArrowDown":
+          movedBoard = slideDown(newBoard);
+          break;
+        case "ArrowLeft":
+          movedBoard = slideLeft(newBoard);
+          break;
+        case "ArrowRight":
+          movedBoard = slideRight(newBoard);
+          break;
+        default:
+          continue;
+      }
+
+      if (JSON.stringify(movedBoard) !== JSON.stringify(newBoard)) {
+        const score = expectimax(movedBoard, 3, false);
+        if (score > bestScore) {
+          bestScore = score;
+          bestMove = movedBoard;
+        }
+      }
+    }
+
+    if (bestMove) {
+      updateBoard(bestMove);
+    }
+
+    await sleep(100);
+  }
+
+  isAIPlaying.value = false;
+  aiRunning.value = false;
+}
+
+function stopAI() {
+  aiRunning.value = false;
+  isAIPlaying.value = false;
 }
 
 function handleConfirm() {
