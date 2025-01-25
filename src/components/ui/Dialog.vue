@@ -39,6 +39,10 @@
 <script lang="ts" setup>
 import { defineProps, defineEmits } from "vue";
 
+defineOptions({
+  name: "Dialog",
+});
+
 defineProps({
   visible: {
     type: Boolean,

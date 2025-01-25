@@ -42,6 +42,10 @@
 import { computed } from "vue";
 import type { PropType } from "vue";
 
+defineOptions({
+  name: "Button",
+});
+
 // type and size for the button
 export type ButtonType = "primary" | "info" | "success" | "warning" | "error";
 export type ButtonSize = "small" | "default" | "large";

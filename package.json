@@ -23,6 +23,7 @@
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.6.2",
+    "unplugin-vue-define-options": "^1.5.5",
     "vite": "^6.0.5",
     "vue-tsc": "^2.2.0"
   }

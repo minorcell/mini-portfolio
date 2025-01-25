@@ -14,6 +14,10 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
 
+defineOptions({
+  name: "Mouse",
+});
+
 const x = ref(0);
 const y = ref(0);
 

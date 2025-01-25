@@ -47,6 +47,9 @@
 
 <script lang="ts" setup>
 import { defineProps, defineEmits, ref } from "vue";
+defineOptions({
+  name: "Input",
+});
 
 const isHovered = ref<boolean>(false);
 
