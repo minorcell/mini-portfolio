@@ -11,7 +11,8 @@
   "dependencies": {
     "qrcode": "^1.5.4",
     "vue": "^3.5.13",
-    "vue-router": "4"
+    "vue-router": "4",
+    "pinia": "^2.3.0"
   },
   "devDependencies": {
     "@types/qrcode": "^1.5.5",
