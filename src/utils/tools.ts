@@ -5,14 +5,11 @@ export function sleep(ms: number) {
 }
 
 export function sortByStatus(works: Work[]) {
-    // 已上线 > 开发中 > 已废弃
+    // finished > developing
     return works.sort((a, b) => {
-        if (a.status === "已上线" && b.status !== "已上线") {
-            return -1;
-        } else if (a.status !== "已上线" && b.status === "已上线") {
-            return 1;
-        } else {
+        if (a.status === b.status) {
             return 0;
         }
+        return a.status === "finished" ? -1 : 1;
     });
 }
