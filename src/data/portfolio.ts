@@ -5,7 +5,7 @@ import { sortByStatus } from "../utils/tools";
 
 export type Work = {
     name: string;
-    status: '开发中' | '已上线' | '已废弃';
+    status: 'developing' | 'finished';
     path: string;
 };
 
@@ -13,22 +13,22 @@ export type Work = {
 export const works: Work[] = sortByStatus([
     {
         name: "2048小游戏",
-        status: "已上线",
+        status: "finished",
         path: "/2048-game",
     },
     {
         name: "多功能画板",
-        status: "开发中",
+        status: "developing",
         path: "/paint-board",
     },
     {
         name: "图片转换",
-        status: "已上线",
+        status: "finished",
         path: "/image-convert",
     },
     {
         name: "二维码生成",
-        status: "已上线",
+        status: "finished",
         path: "/qrcode",
     }
 ])
