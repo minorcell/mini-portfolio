@@ -30,10 +30,5 @@ export const works: Work[] = sortByStatus([
         name: "二维码生成",
         status: "finished",
         path: "/qrcode",
-    },
-    {
-        name: "文件转换",
-        status: "developing",
-        path: "/file-convert",
     }
 ])

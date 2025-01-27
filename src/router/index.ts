@@ -20,11 +20,6 @@ const routes = [
         path: "/qrcode",
         name: "qrcode",
         component: () => import('../pages/QRCode.vue')
-    },
-    {
-        path: "/file-convert",
-        name: "file-convert",
-        component: () => import('../pages/FileConvert.vue')
     }
 ]
 
